@@ -13,4 +13,8 @@ const isEven = (num) => {
   }
 };
 
-module.exports = { sum, greeting, isEven };
+// Arrays
+const ANIMALS = ['cat', 'dog', 'monkey'];
+
+
+module.exports = { sum, greeting, isEven, ANIMALS };
