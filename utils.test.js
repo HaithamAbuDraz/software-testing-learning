@@ -1,4 +1,4 @@
-const { sum, greeting, isEven } = require('./utils');
+const { sum, greeting, isEven, ANIMALS } = require('./utils');
 
 test('sum - should return 2 + 3 = 5', () => {
   const result = sum(2, 3);
@@ -34,4 +34,8 @@ test('validate', () => {
 
   expect(x).not.toBeDefined();
   expect(y).not.toBeNull();
+});
+
+test('animals - should return true for cat', () => {
+  expect(ANIMALS).toContain('cat');
 });
