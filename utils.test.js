@@ -1,4 +1,4 @@
-﻿const { sum, greeting, isEven, ANIMALS } = require('./utils');
+﻿const { sum, greeting, isEven, ANIMALS, getOrderByTd } = require('./utils');
 
 describe('sum', () => {
   it('should return 2 + 3 = 5', () => {
@@ -13,8 +13,10 @@ describe('sum', () => {
   });
 });
 
-test('greeting - should return Hello Haitham', () => {
-  expect(greeting('Haitham')).toMatch(/hello haitham/i);
+describe('greeting', () => {
+  it('should return Hello Haitham', () => {
+    expect(greeting('Haitham')).toMatch(/hello haitham/i);
+  });
 });
 
 describe('isEven', () => {
@@ -42,6 +44,20 @@ describe('validate', () => {
   });
 });
 
-test('animals - should return true for cat', () => {
-  expect(ANIMALS).toContain('cat');
+describe('animals', () => {
+  it('should contain cat', () => {
+    expect(ANIMALS).toContain('cat');
+  });
+});
+
+describe('getOrderByTd', () => {
+  it('should return order of id = 1', () => {
+    const result = getOrderByTd(1);
+    expect(result).toMatchObject({ id: 1, price: 10 });
+    expect(result).toHaveProperty('id', 1);
+  });
+
+  it('should throw error if id is not defined', () => {
+    expect(() => getOrderByTd()).toThrow('id is not defined');
+  });
 });
