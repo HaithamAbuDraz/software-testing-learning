@@ -1,3 +1,5 @@
+const db = require('./db');
+
 // Numbers
 const sum = (num1, num2) => num1 + num2;
 
@@ -18,4 +20,30 @@ const getOrderByTd = (id) => {
   return { id: 1, price: 10, data: '09/07/2026' };
 };
 
-module.exports = { sum, greeting, isEven, ANIMALS, getOrderByTd };
+// Async Code
+const getOrders = async () => {
+  return [
+    { id: 1, price: 10 },
+    { id: 2, price: 20 },
+  ];
+};
+
+const applyDiscount = (orderId) => {
+  const order = db.getOrder(orderId);
+
+  if (order.price >= 10) {
+    order.price -= order.price * 0.1;
+  }
+
+  return order;
+};
+
+module.exports = {
+  sum,
+  greeting,
+  isEven,
+  ANIMALS,
+  getOrderByTd,
+  getOrders,
+  applyDiscount,
+};
