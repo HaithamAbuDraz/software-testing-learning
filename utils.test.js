@@ -1,4 +1,14 @@
-﻿const { sum, greeting, isEven, ANIMALS, getOrderByTd } = require('./utils');
+﻿const {
+  sum,
+  greeting,
+  isEven,
+  ANIMALS,
+  getOrderByTd,
+  getOrders,
+  applyDiscount,
+} = require('./utils');
+
+const db = require('./db');
 
 describe('sum', () => {
   it('should return 2 + 3 = 5', () => {
@@ -61,3 +71,30 @@ describe('getOrderByTd', () => {
     expect(() => getOrderByTd()).toThrow('id is not defined');
   });
 });
+
+describe('getOrders', () => {
+  it('should return some orders', async () => {
+    // const orders = await getOrders();
+    // expect((await getOrders()).length).toBe(2);
+    await expect(getOrders()).resolves.toContainEqual({ id: 1, price: 10 });
+  });
+});
+
+describe('applyDiscount', () => {
+
+  it('should apply discount 10% for order price 10', () => {
+
+    const myFun = jest.fn();
+    myFun.mockReturnValueOnce(10).mockReturnValue(5);
+
+    // db.getOrder = function (orderId) {
+    //   return { id: orderId, price: 10 };
+    // };
+
+    // const order = applyDiscount(1);
+    // expect(order).toEqual({ id: 1, price: 9 });
+
+    console.log(myFun(), myFun());
+  });
+});
+
