@@ -1,4 +1,6 @@
-﻿const {
+﻿const { default: axios } = require('axios');
+
+const {
   sum,
   greeting,
   isEven,
@@ -6,9 +8,12 @@
   getOrderByTd,
   getOrders,
   applyDiscount,
+  fetchData,
 } = require('./utils');
 
 const db = require('./db');
+
+jest.mock('axios');
 
 describe('sum', () => {
   it('should return 2 + 3 = 5', () => {
@@ -117,3 +122,12 @@ describe('applyDiscount', () => {
     expect(db.updateOrder.mock.calls.length).toBe(1);
   });
 });
+
+describe('fetchData', () => {
+  it('should return some data', async () => {
+    axios.get.mockResolvedValue({ id: 5});
+    const data = await fetchData();
+    expect(data).toEqual({ id: 5});
+  });
+});
+
