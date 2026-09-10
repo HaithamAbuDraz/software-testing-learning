@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 
 // env setup
 const env = process.env.NODE_ENV || 'development';
-if (env === 'testing') {
+if (env === 'testing' || env === 'test') {
   Object.assign(process.env, {
     PORT: 5000,
     DB_NAME: 'books-test',
