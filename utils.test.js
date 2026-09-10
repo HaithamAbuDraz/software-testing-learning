@@ -80,21 +80,40 @@ describe('getOrders', () => {
   });
 });
 
+/* Mocking
+- mockReset
+- .mock property
+- mockImplementation
+- mock module
+*/
+
 describe('applyDiscount', () => {
-
   it('should apply discount 10% for order price 10', () => {
+    // db.getOrder = jest.fn().mockReturnValue({ id: 1, price: 10 });
+    db.getOrder = jest.fn().mockImplementation((id) => {
+      if (id < 5) {
+        return { id, price: 10 };
+      }
+      return { id, price: 8 };
+    });
 
-    const myFun = jest.fn();
-    myFun.mockReturnValueOnce(10).mockReturnValue(5);
+    db.updateOrder = jest.fn();
 
-    // db.getOrder = function (orderId) {
-    //   return { id: orderId, price: 10 };
-    // };
+    const order = applyDiscount(1);
 
-    // const order = applyDiscount(1);
-    // expect(order).toEqual({ id: 1, price: 9 });
+    expect(order).toEqual({ id: 1, price: 9 });
+    console.log(db.getOrder.mock);
+    expect(db.getOrder.mock.calls.length).toBe(1);
+    expect(db.getOrder.mock.calls[0][0]).toBe(1);
+    expect(db.updateOrder.mock.calls.length).toBe(1);
+    expect(db.updateOrder.mock.calls[0][0]).toEqual({ id: 1, price: 9 });
+    expect(db.updateOrder).toHaveBeenCalled();
+    expect(db.updateOrder).toHaveBeenCalledWith({ id: 1, price: 9 });
+  });
 
-    console.log(myFun(), myFun());
+  it('should not apply discount for order price 8', () => {
+    const order = applyDiscount(10);
+    expect(order).toEqual({ id: 10, price: 8 });
+    expect(db.updateOrder.mock.calls.length).toBe(1);
   });
 });
-
