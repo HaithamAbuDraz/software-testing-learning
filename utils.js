@@ -33,6 +33,7 @@ const applyDiscount = (orderId) => {
 
   if (order.price >= 10) {
     order.price -= order.price * 0.1;
+    db.updateOrder(order);
   }
 
   return order;
