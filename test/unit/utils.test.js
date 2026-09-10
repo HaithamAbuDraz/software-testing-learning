@@ -1,4 +1,4 @@
-﻿const { default: axios } = require('axios');
+const { default: axios } = require('axios');
 
 const {
   sum,
@@ -10,10 +10,10 @@ const {
   applyDiscount,
   fetchData,
   createOrder,
-} = require('./utils');
+} = require('../../utils');
 
-const email = require('./email');
-const db = require('./db');
+const email = require('../../email');
+const db = require('../../db');
 
 jest.mock('axios');
 
