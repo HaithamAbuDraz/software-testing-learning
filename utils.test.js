@@ -9,8 +9,10 @@ const {
   getOrders,
   applyDiscount,
   fetchData,
+  createOrder,
 } = require('./utils');
 
+const email = require('./email');
 const db = require('./db');
 
 jest.mock('axios');
@@ -125,9 +127,36 @@ describe('applyDiscount', () => {
 
 describe('fetchData', () => {
   it('should return some data', async () => {
-    axios.get.mockResolvedValue({ id: 5});
+    axios.get.mockResolvedValue({ id: 5 });
     const data = await fetchData();
-    expect(data).toEqual({ id: 5});
+    expect(data).toEqual({ id: 5 });
   });
 });
 
+describe('createOrder', () => {
+  it('should throw error if userId is not defined', async () => {
+    await expect(createOrder()).rejects.toThrow('userId not found');
+  });
+
+  it('should create the order and send email', async () => {
+    db.createOrder = jest.fn();
+    db.getUser = jest.fn().mockResolvedValue({ email: 'test@email.com' });
+    email.sendEmail = jest.fn();
+
+    const message = await createOrder(5, [{ price: 10 }, { price: 20 }]);
+    expect(db.createOrder).toHaveBeenCalled();
+    expect(db.createOrder).toHaveBeenCalledWith(5, [
+      { price: 10 },
+      { price: 20 },
+    ]);
+
+    expect(db.getUser.mock.calls.length).toBe(1);
+    expect(db.getUser.mock.calls[0][0]).toBe(5);
+
+    expect(email.sendEmail.mock.calls.length).toBe(1);
+    expect(email.sendEmail.mock.calls[0][0]).toMatch('test@email.com');
+    expect(email.sendEmail.mock.calls[0][1]).toBe(30);
+
+    expect(message).toMatch('order created successfully');
+  });
+});
