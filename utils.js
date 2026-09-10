@@ -1,5 +1,6 @@
 const { default: axios } = require('axios');
 const db = require('./db');
+const email = require('./email');
 
 // Numbers
 const sum = (num1, num2) => num1 + num2;
@@ -46,6 +47,22 @@ const fetchData = async () => {
   return data;
 };
 
+const createOrder = async (userId, products) => {
+  if (!userId) {
+    throw new Error('userId not found');
+  }
+
+  let totalPrice = 0;
+  products.forEach((product) => (totalPrice += product.price));
+
+  await db.createOrder(userId, products);
+
+  const user = await db.getUser(userId);
+  email.sendEmail(user.email, totalPrice);
+
+  return `order created successfully with totalPrice: ${totalPrice} and products: ${products}`;
+};
+
 module.exports = {
   sum,
   greeting,
@@ -55,4 +72,5 @@ module.exports = {
   getOrders,
   applyDiscount,
   fetchData,
+  createOrder,
 };
