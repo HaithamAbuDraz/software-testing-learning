@@ -8,7 +8,7 @@
   "main": "app.js",
   "scripts": {
     "start": "node app.js",
-    "test": "jest --watchAll --verbose",
+    "test": "cross-env NODE_ENV=testing jest --watchAll --verbose",
     "test:run": "cross-env NODE_ENV=testing jest --runInBand"
   },
   "devDependencies": {
