@@ -1,3 +1,4 @@
+const { default: axios } = require('axios');
 const db = require('./db');
 
 // Numbers
@@ -39,6 +40,12 @@ const applyDiscount = (orderId) => {
   return order;
 };
 
+const fetchData = async () => {
+  const data = axios.get('https://url.com');
+  // oprations
+  return data;
+};
+
 module.exports = {
   sum,
   greeting,
@@ -47,4 +54,5 @@ module.exports = {
   getOrderByTd,
   getOrders,
   applyDiscount,
+  fetchData,
 };
