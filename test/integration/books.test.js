@@ -1,4 +1,4 @@
-require('../../config/config');
+const mongoose = require('../../config/config');
 const booksService = require('../../src/api/resources/books/books.service');
 const Book = require('../../src/api/resources/books/books.model');
 
@@ -8,6 +8,7 @@ beforeEach(async () => {
 
 afterAll(async () => {
   await Book.deleteMany({});
+  await mongoose.disconnect();
 });
 
 describe('getBooks', () => {
