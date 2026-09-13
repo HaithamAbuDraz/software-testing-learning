@@ -28,3 +28,25 @@ describe('getBook', () => {
     expect(res.body.message).toMatch('not found');
   });
 });
+
+describe('updateBook', () => {
+  it('should return 404 if book not found', async () => {
+    const res = await request(server).put(
+      '/api/books/62b10f0171a491a27a1214e6',
+    );
+    expect(res.status).toBe(404);
+    expect(res.body.message).toMatch('not found');
+  });
+
+  it('should return 200 and update the book', async () => {
+    const book = await Book.create({ title: 'MyBook' });
+
+    const res = await request(server).put(`/api/books/${book.id}`).send({
+      title: 'My Book Updated',
+    });
+
+    expect(res.status).toBe(200);
+    expect(res.body.message).toMatch('book updated successfully');
+    expect(res.body.data.book).toMatchObject({ title: 'My Book Updated' });
+  });
+});
