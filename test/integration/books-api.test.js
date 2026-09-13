@@ -27,6 +27,11 @@ describe('getBook', () => {
     expect(res.status).toBe(404);
     expect(res.body.message).toMatch('not found');
   });
+
+  it('should return 500', async () => {
+    const res = await request(server).get('/api/books/1');
+    expect(res.status).toBe(500);
+  });
 });
 
 describe('updateBook', () => {
@@ -48,5 +53,16 @@ describe('updateBook', () => {
     expect(res.status).toBe(200);
     expect(res.body.message).toMatch('book updated successfully');
     expect(res.body.data.book).toMatchObject({ title: 'My Book Updated' });
+  });
+});
+
+describe('deleteBook', () => {
+  it('should return 200 and delete the book', async () => {
+    const book = await Book.create({ title: 'MyBook' });
+
+    const res = await request(server).delete(`/api/books/${book.id}`);
+
+    expect(res.status).toBe(200);
+    expect(res.body.message).toMatch('deleted successfully');
   });
 });
