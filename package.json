@@ -8,8 +8,8 @@
   "main": "app.js",
   "scripts": {
     "start": "node app.js",
-    "test": "cross-env NODE_ENV=testing jest --watchAll --verbose --detectOpenHandles",
-    "test:run": "cross-env NODE_ENV=testing jest --runInBand --detectOpenHandles"
+    "test": "cross-env NODE_ENV=testing jest --watchAll --verbose --coverage",
+    "test:run": "cross-env NODE_ENV=testing jest --runInBand"
   },
   "devDependencies": {
     "cross-env": "^7.0.3",
