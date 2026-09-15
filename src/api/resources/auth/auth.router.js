@@ -1,0 +1,13 @@
+// 3rd party libraries
+const express = require('express');
+
+// own libraries
+const authController = require('./auth.controller');
+
+// create the auth router
+const authRouter = express.Router();
+
+// define the routes
+authRouter.route('/registration').post(authController.register);
+
+module.exports = authRouter;
