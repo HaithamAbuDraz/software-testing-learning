@@ -9,9 +9,11 @@
   "scripts": {
     "start": "node app.js",
     "test": "cross-env NODE_ENV=testing jest --watchAll --verbose --coverage",
-    "test:run": "cross-env NODE_ENV=testing jest --runInBand"
+    "test:run": "cross-env NODE_ENV=testing jest --runInBand",
+    "test:cucumber": "cucumber-js"
   },
   "devDependencies": {
+    "@cucumber/cucumber": "^12.9.0",
     "cross-env": "^7.0.3",
     "jest": "^30.5.1",
     "supertest": "^7.2.2"
